@@ -1,16 +1,11 @@
 #include "ExcludeRegexFilter.h"
 
-ExcludeRegexFilter::ExcludeRegexFilter(const std::vector<std::string>& patterns)
-    :excludePatterns(patterns)
+ExcludeRegexFilter::ExcludeRegexFilter(const std::string& pattern)
+    :excludePattern(pattern)
 {
 }
 
 bool ExcludeRegexFilter::matches(const std::string& logLine) const{
-    //check if a log line doesn't match any regular expression
-    for(const auto& pattern : excludePatterns){
-        if(std::regex_search(logLine, std::regex(pattern))){
-            return false;
-        }
-    }
-    return true;
+    //check if a log line doesn't match a regular expression
+    return !std::regex_search(logLine, excludePattern);
 }

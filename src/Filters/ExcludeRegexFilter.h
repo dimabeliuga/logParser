@@ -8,13 +8,13 @@
 
 class ExcludeRegexFilter : public ILogFilter{
 public:
-    //The constructor that takes a vector of regular expressions that a log string must not match
-    explicit ExcludeRegexFilter(const std::vector<std::string>& patterns);
+    //The constructor takes a string(user regular expressions) that a log string must not match
+    explicit ExcludeRegexFilter(const std::string& patterns);
 
-    //The function checks so that a log string doesn't contain not one of the words listed 
+    //The function checks so that a log string doesn't match a regular expression 
     bool matches(const std::string& logLine) const override;
 
 private:
-     std::vector<std::string> excludePatterns;
+     std::regex excludePattern;
 };
 #endif

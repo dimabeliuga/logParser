@@ -38,4 +38,7 @@ void CompositeFilter::buildCompositeFilters(const CliConfig& config){
     if(!config.exclude.empty()){
         addFilter(std::make_unique<ExcludeFilter>(config.exclude));
     }
+    if(!config.excludeRegex.empty()){
+        addFilter(std::make_unique<ExcludeRegexFilter>(config.excludeRegex));
+    }
 }

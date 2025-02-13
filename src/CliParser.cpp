@@ -65,9 +65,10 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
                 errorMessage = "Flag --exclude requires at least one parametr";
                 return false;
             }
-        } else if(arg == "--exclude-regex"){
-            config.excludeRegex = extractParametrs(i, argc, argv);
-            if(config.excludeRegex.empty()){
+        } else if(arg == "--exclude_regex"){
+            if(i + 1 < argc){
+                config.excludeRegex = argv[++i];
+            } else {
                 errorMessage = "Flag --exclude-regex must contain one argument at least";
                 return false;
             }
