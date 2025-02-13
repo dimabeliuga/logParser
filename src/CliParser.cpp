@@ -9,14 +9,15 @@ std::string CliParser::getError() const {
 }
 
 void CliParser::printUsage() const {
-    std::cout << "Использование: log_parser --input <log_file> [--output <output_file_path>] "
-                 "[--regex_match <regular_expression>] [--regex_search <regular_expression>] "
-                 "[--level <log_level1> [<log_level2> ...]] \n";
+    std::cout << "How to use: log_parser --input <log_file> [--output <output_file_path>] "
+                "[--regex_match <regular_expression>] [--regex_search <regular_expression>] "
+                "[--level <log_level1> [<log_level2> ...]] [--exclude <excluded_string1> [<excluded_string2 ...]] "
+                "[--exclude_regex <regular_expression>]\n";
 }
 
 bool CliParser::parse(int argc, char** argv, CliConfig &config) {
     if (argc < 2) {
-        errorMessage = "Недостаточно аргументов.";
+        errorMessage = "Not enough arguments!!!";
         return false;
     }
     
