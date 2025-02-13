@@ -20,6 +20,7 @@ set(SOURCES
     src/Filters/LevelFilter.cpp
     src/Filters/CompositeFilter.cpp
     src/Filters/ExcludeFilter.cpp
+    src/Filters/ExcludeRegexFilter.cpp
 )
 
 # Создаем исполняемый файл

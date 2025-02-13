@@ -15,6 +15,6 @@ public:
     bool matches(const std::string& logLine) const override;
 
 private:
-     std::vector<std::string> excludeWords;
+    std::vector<std::string> excludeWords;
 };
 #endif

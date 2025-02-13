@@ -79,6 +79,12 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
                 errorMessage = "Flag --exclude requires at least one parametr";
                 return false;
             }
+        } else if(arg == "--exclude-regex"){
+            config.excludeRegex = extractParametrs(i, argc, argv);
+            if(config.excludeRegex.empty()){
+                errorMessage = "Flag --exclude-regex must contain one argument at least";
+                return false;
+            }
         } else if(arg == "--help"){
             config.helpCommandRequested = true;
             return true;
@@ -100,4 +106,17 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
     }
     
     return true;
+}
+
+std::vector<std::string> CliParser::extractParametrs(int& currentIndex, int argc, char** argv){
+    std::vector<std::string> parametrs;
+    while(currentIndex+1 < argc){
+        std::string nextArg = argv[currentIndex+1];
+        if(nextArg.rfind("--", 0) == 0){
+            break;
+        }
+        parametrs.push_back(nextArg);
+        ++currentIndex;
+    }
+    return parametrs;
 }
