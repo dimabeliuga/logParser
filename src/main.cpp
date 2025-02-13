@@ -3,13 +3,7 @@
 #include "CliParser.h"
 #include "FileManager.h"
 #include "LogProcessor.h"
-
-// Фильтры
 #include "Filters/CompositeFilter.h"
-#include "Filters/RegexMatchFilter.h"
-#include "Filters/RegexSearchFilter.h"
-#include "Filters/LevelFilter.h"
-#include "Filters/ExcludeFilter.h"
 
 int main(int argc, char** argv) {
     // Разбор аргументов командной строки
@@ -43,25 +37,8 @@ int main(int argc, char** argv) {
     
     // Создание составного фильтра, который объединяет активные проверки
     CompositeFilter compositeFilter;
+    compositeFilter.buildCompositeFilters(config);
     
-    // Если указан флаг --regex_match, добавляем фильтр полного соответствия
-    if (!config.regexMatch.empty()) {
-        compositeFilter.addFilter(std::make_unique<RegexMatchFilter>(config.regexMatch));
-    }
-    
-    // Если указан флаг --regex_search, добавляем фильтр поиска совпадений
-    if (!config.regexSearch.empty()) {
-        compositeFilter.addFilter(std::make_unique<RegexSearchFilter>(config.regexSearch));
-    }
-    
-    // Если указан флаг --level, добавляем фильтр уровней логов
-    if (!config.levels.empty()) {
-        compositeFilter.addFilter(std::make_unique<LevelFilter>(config.levels));
-    }
-    
-    if(!config.exclude.empty()){
-        compositeFilter.addFilter(std::make_unique<ExcludeFilter>(config.exclude));
-    }
     // Инициализация LogProcessor и запуск обработки логов
     LogProcessor logProcessor(config.inputFile, validatedOutputPath, overwriteMode);
     logProcessor.process(compositeFilter);

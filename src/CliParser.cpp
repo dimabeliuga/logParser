@@ -54,27 +54,13 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
         } else if (arg == "--level") {
             // После флага --level могут идти один или несколько уровней,
             // пока следующий аргумент не начинается с "--" или не закончились аргументы.
-            while (i + 1 < argc) {
-                std::string nextArg = argv[i + 1];
-                if (nextArg.rfind("--", 0) == 0) { // Если следующий аргумент начинается с "--", это новый флаг.
-                    break;
-                }
-                config.levels.push_back(nextArg);
-                ++i;
-            }
+            config.levels = extractParametrs(i, argc, argv);
             if (config.levels.empty()) {
                 errorMessage = "Флаг --level требует указания хотя бы одного уровня логов.";
                 return false;
             }
         } else if(arg == "--exclude"){
-            while(i+1 < argc){
-                std::string nextArg = argv[i + 1];
-                if(nextArg.rfind("--", 0) == 0){
-                    break;
-                }
-                config.exclude.push_back(nextArg);
-                ++i;
-            }
+            config.exclude = extractParametrs(i, argc, argv);
             if(config.exclude.empty()){
                 errorMessage = "Flag --exclude requires at least one parametr";
                 return false;
@@ -89,7 +75,7 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
             config.helpCommandRequested = true;
             return true;
         } else {
-            errorMessage = "Неизвестный аргумент: " + arg;
+            errorMessage = "Unknown argument: " + arg;
             return false;
         }
     }
