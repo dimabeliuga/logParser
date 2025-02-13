@@ -11,7 +11,9 @@ struct CliConfig {
     std::string outputFile;     // Путь для сохранения файла с результатом (если не указан, можно задать значение по умолчанию)
     std::string regexMatch;     // Регулярное выражение для проверки полного соответствия строки
     std::string regexSearch;    // Регулярное выражение для поиска в строке
+    std::vector<std::string> exclude;
     std::vector<std::string> levels; // Список уровней логов
+    bool helpCommandRequested = false;  // Show the programm instruction 
 };
 
 class CliParser {

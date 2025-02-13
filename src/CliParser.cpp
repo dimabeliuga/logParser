@@ -11,7 +11,7 @@ std::string CliParser::getError() const {
 void CliParser::printUsage() const {
     std::cout << "Использование: log_parser --input <log_file> [--output <output_file_path>] "
                  "[--regex_match <regular_expression>] [--regex_search <regular_expression>] "
-                 "[--level <log_level1> [<log_level2> ...]]\n";
+                 "[--level <log_level1> [<log_level2> ...]] \n";
 }
 
 bool CliParser::parse(int argc, char** argv, CliConfig &config) {
@@ -66,6 +66,22 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
                 errorMessage = "Флаг --level требует указания хотя бы одного уровня логов.";
                 return false;
             }
+        } else if(arg == "--exclude"){
+            while(i+1 < argc){
+                std::string nextArg = argv[i + 1];
+                if(nextArg.rfind("--", 0) == 0){
+                    break;
+                }
+                config.exclude.push_back(nextArg);
+                ++i;
+            }
+            if(config.exclude.empty()){
+                errorMessage = "Flag --exclude requires at least one parametr";
+                return false;
+            }
+        } else if(arg == "--help"){
+            config.helpCommandRequested = true;
+            return true;
         } else {
             errorMessage = "Неизвестный аргумент: " + arg;
             return false;

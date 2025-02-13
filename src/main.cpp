@@ -9,17 +9,23 @@
 #include "Filters/RegexMatchFilter.h"
 #include "Filters/RegexSearchFilter.h"
 #include "Filters/LevelFilter.h"
+#include "Filters/ExcludeFilter.h"
 
 int main(int argc, char** argv) {
     // Разбор аргументов командной строки
     CliConfig config;
     CliParser parser;
     if (!parser.parse(argc, argv, config)) {
-        std::cerr << "Ошибка при разборе аргументов: " << parser.getError() << std::endl;
+        std::cerr << "Problem: " << parser.getError() << std::endl;
         parser.printUsage();
         return EXIT_FAILURE;
     }
     
+    //Check if the user requested the programm instruction
+    if(config.helpCommandRequested){
+        parser.printUsage();
+        return EXIT_SUCCESS;
+    }
     // Проверка существования входного файла
     if (!FileManager::fileExists(config.inputFile)) {
         std::cerr << "Входной файл не существует: " << config.inputFile << std::endl;
@@ -53,6 +59,9 @@ int main(int argc, char** argv) {
         compositeFilter.addFilter(std::make_unique<LevelFilter>(config.levels));
     }
     
+    if(!config.exclude.empty()){
+        compositeFilter.addFilter(std::make_unique<ExcludeFilter>(config.exclude));
+    }
     // Инициализация LogProcessor и запуск обработки логов
     LogProcessor logProcessor(config.inputFile, validatedOutputPath, overwriteMode);
     logProcessor.process(compositeFilter);
