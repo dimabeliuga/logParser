@@ -8,7 +8,8 @@
 
 // Структура для хранения параметров командной строки
 struct CliConfig {
-    std::vector<std::string> inputFile;      // Обязательный параметр: путь к файлу с логами
+    std::vector<std::string> inputFile;  // Обязательный параметр: путь к файлу с логами
+    std::string inputDir;       //path to directory with log files
     std::string outputFile;     // Путь для сохранения файла с результатом (если не указан, можно задать значение по умолчанию)
     std::string regexMatch;     // Регулярное выражение для проверки полного соответствия строки
     std::string regexSearch;    // Регулярное выражение для поиска в строке

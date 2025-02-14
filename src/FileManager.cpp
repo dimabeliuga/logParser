@@ -59,3 +59,39 @@ bool FileManager::promptOverwriteOrAppend(const std::string& filePath) {
         exit(EXIT_FAILURE);
     }
 }
+
+bool FileManager::promptMergeFilesorSeperate(const size_t inputFilesNumber){
+    if(inputFilesNumber == 1){
+        return true;
+    }
+
+    std::cout << "\nNumber of input files: " << inputFilesNumber;
+    std::cout << "\nChoose an action:";
+    std::cout << "\n1) write all logs to one file";
+    std::cout << "\n2) Write each log separately";
+    std::cout << "\nYour choise(1\2): ";
+
+    int choise;
+    std::cin >> choise;
+    if(choise == 1){
+        return true;
+    } else if(choise == 2){
+        return false;
+    } else {
+        std::cerr << "\nWrong choise. Exit programm";
+        exit(EXIT_FAILURE);
+    }
+}
+
+void FileManager::getLogFilesFromDirectory(std::string& directoryPath, std::vector<std::string>& logFiles){
+    if(!std::filesystem::exists(directoryPath) || !std::filesystem::is_directory(directoryPath)){
+        std::cerr << "Error: Incorect directory path!!!" << std::endl;
+        return;
+    }
+    
+    for(const auto& entry : std::filesystem::directory_iterator(directoryPath)){
+        if (entry.is_regular_file() && entry.path().extension() == ".log") {
+            logFiles.push_back(entry.path().string());
+        }
+    }
+}

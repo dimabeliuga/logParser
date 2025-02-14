@@ -31,6 +31,13 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
                 errorMessage = "Syntax error: The flag --input requires a file path";
                 return false;
             }
+        } else if(arg == "--input_dir"){
+            if(i + 1 < argc){
+                config.inputDir = argv[++i];
+            } else{
+                errorMessage = "Syntax error: The flag --input_dir requires a correct path to log files";
+                return false;
+            }
         } else if (arg == "--output") {
             if (i + 1 < argc) {
                 config.outputFile = argv[++i];

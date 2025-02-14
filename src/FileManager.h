@@ -3,6 +3,8 @@
 #define FILE_MANAGER_H
 
 #include <string>
+#include <vector>
+#include <filesystem>
 
 class FileManager {
 public:
@@ -19,6 +21,12 @@ public:
     // Запрос у пользователя, хочет ли он перезаписать существующий файл или дописать в конец.
     // Возвращает true, если выбран режим перезаписи, false – для дозаписи.
     static bool promptOverwriteOrAppend(const std::string& filePath);
+
+    //ask the user if he want to merge all logs in one file or seperate them
+    static bool promptMergeFilesorSeperate(const size_t inputFilesNumber);
+
+    //extract all log files from the directory that the user input
+    static void getLogFilesFromDirectory(std::string& directoryPath, std::vector<std::string>& logFiles);
 };
 
 #endif // FILE_MANAGER_H
