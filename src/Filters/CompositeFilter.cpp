@@ -30,15 +30,18 @@ void CompositeFilter::buildCompositeFilters(const CliConfig& config){
         addFilter(std::make_unique<RegexSearchFilter>(config.regexSearch));
     }
     
-    // Если указан флаг --level, добавляем фильтр уровней логов
-    if (!config.levels.empty()) {
-        addFilter(std::make_unique<LevelFilter>(config.levels));
-    }
-    
-    if(!config.exclude.empty()){
-        addFilter(std::make_unique<ExcludeFilter>(config.exclude));
-    }
+    //if the user specified --exclude_regex, add a regex that the lines should not match 
     if(!config.excludeRegex.empty()){
         addFilter(std::make_unique<ExcludeRegexFilter>(config.excludeRegex));
     }
+    
+    //if the user specified --exclude, add a word(words) that the lines should not contain
+    if(!config.exclude.empty()){
+        addFilter(std::make_unique<ExcludeFilter>(config.exclude));
+    }
+    
+    // Если указан флаг --level, добавляем фильтр уровней логов
+    if (!config.levels.empty()) {
+        addFilter(std::make_unique<LevelFilter>(config.levels));
+    }    
 }

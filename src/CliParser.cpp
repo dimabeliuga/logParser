@@ -26,30 +26,30 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
         
         if (arg == "--input") {
             if (i + 1 < argc) {
-                config.inputFile = argv[++i];
-            } else {
-                errorMessage = "Флаг --input требует указания пути к файлу.";
+                config.inputFile = extractParametrs(i, argc, argv);
+            } if(config.inputFile.empty()) {
+                errorMessage = "Syntax error: The flag --input requires a file path";
                 return false;
             }
         } else if (arg == "--output") {
             if (i + 1 < argc) {
                 config.outputFile = argv[++i];
             } else {
-                errorMessage = "Флаг --output требует указания пути для сохранения файла.";
+                errorMessage = "Syntax error: The flag --output requires a correct output path";
                 return false;
             }
         } else if (arg == "--regex_match") {
             if (i + 1 < argc) {
                 config.regexMatch = argv[++i];
             } else {
-                errorMessage = "Флаг --regex_match требует указания регулярного выражения.";
+                errorMessage = "Syntax error: The flag -- regex_match requires a regular expression";
                 return false;
             }
         } else if (arg == "--regex_search") {
             if (i + 1 < argc) {
                 config.regexSearch = argv[++i];
             } else {
-                errorMessage = "Флаг --regex_search требует указания регулярного выражения.";
+                errorMessage = "Syntax error: The flag --regex_search requires a regular expression";
                 return false;
             }
         } else if (arg == "--level") {
@@ -57,42 +57,50 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
             // пока следующий аргумент не начинается с "--" или не закончились аргументы.
             config.levels = extractParametrs(i, argc, argv);
             if (config.levels.empty()) {
-                errorMessage = "Флаг --level требует указания хотя бы одного уровня логов.";
+                errorMessage = "Syntax error: The flag --level requires level(levels)";
                 return false;
             }
         } else if(arg == "--exclude"){
             config.exclude = extractParametrs(i, argc, argv);
             if(config.exclude.empty()){
-                errorMessage = "Flag --exclude requires at least one parametr";
+                errorMessage = "Syntax error: The flag --exclude requires at least one parametr";
                 return false;
             }
         } else if(arg == "--exclude_regex"){
             if(i + 1 < argc){
                 config.excludeRegex = argv[++i];
             } else {
-                errorMessage = "Flag --exclude-regex must contain one argument at least";
+                errorMessage = "Syntax error: The flag --exclude-regex must contain one argument at least";
                 return false;
             }
         } else if(arg == "--help"){
-            config.helpCommandRequested = true;
-            return true;
+            errorMessage = "Action: The user requested instuction";
+            return false;
         } else {
-            errorMessage = "Unknown argument: " + arg;
+            errorMessage = "Error: Unknown argument: " + arg;
             return false;
         }
     }
-    
-    // Проверка обязательного параметра --input
-    if (config.inputFile.empty()) {
-        errorMessage = "Обязательный параметр --input не указан.";
+
+    // Проверка существования входного файла
+    for(size_t i = 0; i < config.inputFile.size(); ++i){
+        if(!FileManager::fileExists(config.inputFile[i])){
+            errorMessage += "Input file does not exist: " + config.inputFile[i] + "\n";
+            config.inputFile.erase(config.inputFile.begin() + i);
+        }
+    }
+
+    //if none valid input files left, the function will return false
+    if(config.inputFile.empty()){
+        errorMessage += "Error: None of the files was valid. Try again...";
         return false;
     }
-    
+
     // Если выходной файл не задан, можно установить значение по умолчанию
     if (config.outputFile.empty()) {
         config.outputFile = "output.log";
     }
-    
+
     return true;
 }
 

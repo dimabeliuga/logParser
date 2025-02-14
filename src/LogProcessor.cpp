@@ -4,18 +4,12 @@
 #include <iostream>
 #include <string>
 
-LogProcessor::LogProcessor(const std::string &inputPath, const std::string &outputPath, bool overwrite)
-    : inputFile(inputPath), outputFile(outputPath), overwriteMode(overwrite)
+LogProcessor::LogProcessor(const std::vector<std::string> &inputPath, const std::string &outputPath, bool overwrite)
+    : inputFiles(inputPath), outputFile(outputPath), overwriteMode(overwrite)
 {
 }
 
 void LogProcessor::process(const ILogFilter &filter) const {
-    std::ifstream inFile(inputFile);
-    if (!inFile.is_open()) {
-        std::cerr << "Не удалось открыть входной файл: " << inputFile << std::endl;
-        return;
-    }
-    
     std::ios_base::openmode mode = std::ios::out;
     if (overwriteMode) {
         mode |= std::ios::trunc;  // Перезапись файла
@@ -25,7 +19,22 @@ void LogProcessor::process(const ILogFilter &filter) const {
     
     std::ofstream outFile(outputFile, mode);
     if (!outFile.is_open()) {
-        std::cerr << "Не удалось открыть выходной файл: " << outputFile << std::endl;
+        std::cerr << "Failed to open the output file: " << outputFile << std::endl;
+        return;
+    }
+    for(std::string inputPath : inputFiles){
+        processWithEachFile(inputPath, outFile, filter);
+    }
+    outFile.close();
+    
+    std::cout << "Log processing is over. Result has been saved to: " << outputFile << std::endl;
+}
+
+
+void LogProcessor::processWithEachFile(const std::string& inputFilePath, std::ofstream& outFile, const ILogFilter& filter) const{
+    std::ifstream inFile(inputFilePath);
+    if (!inFile.is_open()) {
+        std::cerr << "Opening file failed: " << inputFilePath << std::endl;
         return;
     }
     
@@ -37,7 +46,4 @@ void LogProcessor::process(const ILogFilter &filter) const {
     }
     
     inFile.close();
-    outFile.close();
-    
-    std::cout << "Обработка логов завершена. Результат сохранен в: " << outputFile << std::endl;
 }

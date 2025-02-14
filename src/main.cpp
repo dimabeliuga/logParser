@@ -1,28 +1,16 @@
 // main.cpp
 #include <iostream>
-#include "CliParser.h"
-#include "FileManager.h"
-#include "LogProcessor.h"
 #include "Filters/CompositeFilter.h"
+#include "LogProcessor.h"
+#include "FileManager.h"
 
 int main(int argc, char** argv) {
     // Разбор аргументов командной строки
     CliConfig config;
     CliParser parser;
     if (!parser.parse(argc, argv, config)) {
-        std::cerr << "Problem: " << parser.getError() << std::endl;
+        std::cerr << parser.getError() << std::endl;
         parser.printUsage();
-        return EXIT_FAILURE;
-    }
-    
-    //Check if the user requested the programm instruction
-    if(config.helpCommandRequested){
-        parser.printUsage();
-        return EXIT_SUCCESS;
-    }
-    // Проверка существования входного файла
-    if (!FileManager::fileExists(config.inputFile)) {
-        std::cerr << "Входной файл не существует: " << config.inputFile << std::endl;
         return EXIT_FAILURE;
     }
     

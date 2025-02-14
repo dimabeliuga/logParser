@@ -4,6 +4,7 @@
 
 #include "ILogFilter.h"
 #include "CliParser.h"
+
 #include <vector>
 #include <memory>
 #include <string>
