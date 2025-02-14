@@ -48,16 +48,8 @@ bool FileManager::promptOverwriteOrAppend(const std::string& filePath) {
     std::cout << "  1. Перезаписать файл\n";
     std::cout << "  2. Добавить данные в конец файла\n";
     std::cout << "Ваш выбор (1/2): ";
-    int choice;
-    std::cin >> choice;
-    if (choice == 1) {
-        return true;  // true для перезаписи
-    } else if (choice == 2) {
-        return false; // false для дозаписи
-    } else {
-        std::cerr << "Неверный выбор. Завершение программы.\n";
-        exit(EXIT_FAILURE);
-    }
+    
+    return userChoice();
 }
 
 bool FileManager::promptMergeFilesorSeperate(const size_t inputFilesNumber){
@@ -70,20 +62,15 @@ bool FileManager::promptMergeFilesorSeperate(const size_t inputFilesNumber){
     std::cout << "\n1) write all logs to one file";
     std::cout << "\n2) Write each log separately";
     std::cout << "\nYour choise(1\2): ";
-
-    int choise;
-    std::cin >> choise;
-    if(choise == 1){
-        return true;
-    } else if(choise == 2){
-        return false;
-    } else {
-        std::cerr << "\nWrong choise. Exit programm";
-        exit(EXIT_FAILURE);
-    }
+    
+    return userChoice();
 }
 
 void FileManager::getLogFilesFromDirectory(std::string& directoryPath, std::vector<std::string>& logFiles){
+    if(directoryPath.empty()){
+        return;
+    }
+    
     if(!std::filesystem::exists(directoryPath) || !std::filesystem::is_directory(directoryPath)){
         std::cerr << "Error: Incorect directory path!!!" << std::endl;
         return;
@@ -93,5 +80,18 @@ void FileManager::getLogFilesFromDirectory(std::string& directoryPath, std::vect
         if (entry.is_regular_file() && entry.path().extension() == ".log") {
             logFiles.push_back(entry.path().string());
         }
+    }
+}
+
+bool FileManager::userChoice(){
+    int choise;
+    std::cin >> choise;
+    if(choise == 1){
+        return true;
+    } else if(choise == 2){
+        return false;
+    } else {
+        std::cerr << "\nWrong choise. Exit programm";
+        exit(EXIT_FAILURE);
     }
 }

@@ -13,28 +13,17 @@ int main(int argc, char** argv) {
         parser.printUsage();
         return EXIT_FAILURE;
     }
-    
 
     FileManager::getLogFilesFromDirectory(config.inputDir, config.inputFile);
     // Валидация пути для выходного файла
     std::string validatedOutputPath = FileManager::validateOutputPath(config.outputFile);
-    
-    // Если файл уже существует, запрашиваем у пользователя режим записи (перезапись или дозапись)
-    bool overwriteMode   = true;
-    //if more than one log file enetered, ask user merge output mode(all logs in one file or seperate ones)
-    bool mergeOutputMode = true;
 
-    if (FileManager::fileAlreadyExists(validatedOutputPath)) {
-        overwriteMode = FileManager::promptOverwriteOrAppend(validatedOutputPath);
-
-    }
-    
     // Создание составного фильтра, который объединяет активные проверки
     CompositeFilter compositeFilter;
     compositeFilter.buildCompositeFilters(config);
     
     // Инициализация LogProcessor и запуск обработки логов
-    LogProcessor logProcessor(config.inputFile, validatedOutputPath, overwriteMode);
+    LogProcessor logProcessor(config.inputFile, validatedOutputPath);
     logProcessor.process(compositeFilter);
     
     return EXIT_SUCCESS;

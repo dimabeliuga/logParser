@@ -27,6 +27,10 @@ public:
 
     //extract all log files from the directory that the user input
     static void getLogFilesFromDirectory(std::string& directoryPath, std::vector<std::string>& logFiles);
+
+private:
+    //helper function for promt functions
+    static bool userChoice();
 };
 
 #endif // FILE_MANAGER_H
