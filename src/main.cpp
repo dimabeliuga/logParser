@@ -3,9 +3,6 @@
 #include "Filters/CompositeFilter.h"
 #include "LogProcessor.h"
 
-//1) пересмотреть cliparser.cpp
-//2) пересмотреть отпут
-
 int main(int argc, char** argv) {
     // Разбор аргументов командной строки
     CliConfig config;

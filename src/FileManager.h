@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <filesystem>
+#include <sstream>
 
 class FileManager {
 public:
@@ -33,6 +34,9 @@ private:
     static bool userChoice();
     // Handles the case when the file name is provided without an extension.
     static void handleMissingExtension(std::filesystem::path& outPath);
+
+    //helper function to find out files' extensions the user wants to extract from the folder
+    static std::vector<std::string> askDesiredExtensions();
 
     // Prompts the user when the parent directory does not exist and returns a new path in the current directory.
     static std::filesystem::path promptForNonExistentDirectory(const std::filesystem::path& parentPath, const std::filesystem::path& fileName);

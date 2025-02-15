@@ -36,7 +36,8 @@ void LogProcessor::processMergedOutput(const ILogFilter& filter) const {
 void LogProcessor::processSeparateOutputs(const ILogFilter& filter) const {
     for (const auto& inputFile : inputFiles) {
         fs::path inPath(inputFile);
-        fs::path outPath = inPath.parent_path() / (inPath.stem().string() + "_parced" + inPath.extension().string());
+        fs::path outPath(outputFile); 
+        outPath = outPath.parent_path() / (inPath.stem().string() + "_parced" + inPath.extension().string());
         std::string outFilePath = outPath.string();
         std::cout << "\n" << outPath << "\n";
         std::ios_base::openmode mode = getOutputFileMode(outFilePath);
@@ -59,7 +60,6 @@ std::ios_base::openmode LogProcessor::getOutputFileMode(const std::string& fileP
     // Режим всегда включает std::ios::out, а также trunc или app
     return std::ios::out | (overwriteMode ? std::ios::trunc : std::ios::app);
 }
-
 
 void LogProcessor::processFile(const std::string& inputFilePath, std::ofstream& outFile, const ILogFilter& filter) const {
     std::ifstream inFile(inputFilePath);

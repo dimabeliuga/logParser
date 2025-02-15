@@ -116,13 +116,32 @@ void FileManager::getLogFilesFromDirectory(std::string& directoryPath, std::vect
         return;
     }
     
-    for(const auto& entry : std::filesystem::directory_iterator(directoryPath)){
-        if (entry.is_regular_file() && entry.path().extension() == ".log") {
-            logFiles.push_back(entry.path().string());
+    std::vector<std::string> allowedExtensions = askDesiredExtensions();
+    for (const auto &entry : std::filesystem::directory_iterator(directoryPath)) {
+        if (entry.is_regular_file()) {
+            // Получаем расширение файла
+            std::string fileExt = entry.path().extension().string();
+            // Проверяем, содержится ли расширение в списке разрешённых
+            if (std::find(allowedExtensions.begin(), allowedExtensions.end(), fileExt) != allowedExtensions.end()) {
+                logFiles.push_back(entry.path().string());
+            }
         }
     }
 }
 
+std::vector<std::string> FileManager::askDesiredExtensions(){
+    std::string lineExtensions;
+    std::cout << "\nEnter extensions you want to extract from the folder with logs: ";
+    std::getline(std::cin, lineExtensions);
+    
+    std::istringstream iss(lineExtensions);
+    std::vector<std::string> extencions;
+    std::string word;
+    while (iss >> word){
+        extencions.push_back(word);
+    }
+    return extencions;
+}
 bool FileManager::userChoice(){
     int choise;
     std::cin >> choise;

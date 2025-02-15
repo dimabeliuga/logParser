@@ -136,22 +136,24 @@ void CliParser::loadConfig(CliConfig& config){
         if(line.empty() || line[0] == '#'){
             continue;
         }
-
+    
         std::istringstream iss(line);
         std::string key, value;
-
+        
         if(std::getline(iss, key, '=') && std::getline(iss, value)){
+            std::cout << key << "   " << value;
             if(key == "--input"){
                 config.inputFile.push_back(value);
-            } else if(key == "--input_dir"     && !config.inputDir.empty()){
+            } else if(key == "--input_dir"     && config.inputDir.empty()){
+                std::cout << value << '\n';
                 config.inputDir = value;
-            } else if(key == "--output"        && !config.outputFile.empty()){
+            } else if(key == "--output" && config.outputFile.empty()){
                 config.outputFile = value;
-            } else if(key == "--regex_match"   && !config.regexMatch.empty()){
+            } else if(key == "--regex_match"   && config.regexMatch.empty()){
                 config.regexMatch = value;
-            } else if(key == "--regex_search"  && !config.regexSearch.empty()){
+            } else if(key == "--regex_search"  && config.regexSearch.empty()){
                 config.regexSearch = value;
-            } else if(key == "--exclude_regex" && !config.excludeRegex.empty()){
+            } else if(key == "--exclude_regex" && config.excludeRegex.empty()){
                 config.excludeRegex = value;
             } else if(key == "--exclude"){
                 std::istringstream excludeWords(value);
@@ -168,6 +170,7 @@ void CliParser::loadConfig(CliConfig& config){
             }
         }
     }
+    std::cout << "End\n\n";
     inFile.close();
 }
 
@@ -196,6 +199,21 @@ bool CliParser::inputDataValidation(CliConfig& config){
     }
 
     config.outputFile = FileManager::validateOutputPath(config.outputFile);
-    
+
     return true;
 }
+
+/*
+// Функция для удаления пробелов с начала и конца строки.
+static inline std::string trim(const std::string &s) {
+    auto start = s.begin();
+    while (start != s.end() && std::isspace(*start)) {
+        start++;
+    }
+    auto end = s.end();
+    do {
+        end--;
+    } while (std::distance(start, end) > 0 && std::isspace(*end));
+    return std::string(start, end + 1);
+}
+*/
