@@ -13,7 +13,7 @@ public:
 
     // Валидация выходного пути.
     // Если родительский каталог не существует, предложить сохранить в текущей директории.
-    static std::string validateOutputPath(const std::string& outputPath);
+    static std::string validateOutputPath(std::string& outputPath);
 
     // Проверка, существует ли файл с данным именем
     static bool fileAlreadyExists(const std::string& path);
@@ -31,6 +31,12 @@ public:
 private:
     //helper function for promt functions
     static bool userChoice();
+    // Handles the case when the file name is provided without an extension.
+    static void handleMissingExtension(std::filesystem::path& outPath);
+
+    // Prompts the user when the parent directory does not exist and returns a new path in the current directory.
+    static std::filesystem::path promptForNonExistentDirectory(const std::filesystem::path& parentPath, const std::filesystem::path& fileName);
+
 };
 
 #endif // FILE_MANAGER_H

@@ -18,15 +18,6 @@ void LogProcessor::process(const ILogFilter& filter) const {
     }
 }
 
-std::ios_base::openmode LogProcessor::getOutputFileMode(const std::string& filePath) const {
-    bool overwriteMode = true;
-    if (FileManager::fileAlreadyExists(filePath)) {
-        overwriteMode = FileManager::promptOverwriteOrAppend(filePath);
-    }
-    // Режим всегда включает std::ios::out, а также trunc или app
-    return std::ios::out | (overwriteMode ? std::ios::trunc : std::ios::app);
-}
-
 void LogProcessor::processMergedOutput(const ILogFilter& filter) const {
     std::ios_base::openmode mode = getOutputFileMode(outputFile);
     std::ofstream outFile(outputFile, mode);
@@ -34,7 +25,7 @@ void LogProcessor::processMergedOutput(const ILogFilter& filter) const {
         std::cerr << "Failed to open the output file: " << outputFile << std::endl;
         return;
     }
-    
+
     for (const auto& inputPath : inputFiles) {
         processFile(inputPath, outFile, filter);
     }
@@ -47,18 +38,28 @@ void LogProcessor::processSeparateOutputs(const ILogFilter& filter) const {
         fs::path inPath(inputFile);
         fs::path outPath = inPath.parent_path() / (inPath.stem().string() + "_parced" + inPath.extension().string());
         std::string outFilePath = outPath.string();
-        
+        std::cout << "\n" << outPath << "\n";
         std::ios_base::openmode mode = getOutputFileMode(outFilePath);
         std::ofstream outFile(outFilePath, mode);
         if (!outFile.is_open()) {
             std::cerr << "Failed to open the output file: " << outFilePath << std::endl;
             continue; // Переходим к следующему файлу
         }
-        
+
         processFile(inputFile, outFile, filter);
         std::cout << "Logs were written in " << outPath << "\n";
     }
 }
+
+std::ios_base::openmode LogProcessor::getOutputFileMode(const std::string& filePath) const {
+    bool overwriteMode = true;
+    if (FileManager::fileAlreadyExists(filePath)) {
+        overwriteMode = FileManager::promptOverwriteOrAppend(filePath);
+    }
+    // Режим всегда включает std::ios::out, а также trunc или app
+    return std::ios::out | (overwriteMode ? std::ios::trunc : std::ios::app);
+}
+
 
 void LogProcessor::processFile(const std::string& inputFilePath, std::ofstream& outFile, const ILogFilter& filter) const {
     std::ifstream inFile(inputFilePath);

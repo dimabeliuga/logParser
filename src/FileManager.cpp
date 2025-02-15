@@ -2,7 +2,7 @@
 #include "FileManager.h"
 #include <iostream>
 #include <filesystem>
-#include <cstdlib>    // для exit()
+#include <cstdlib>    
 #include <fstream>
 
 namespace fs = std::filesystem;
@@ -11,31 +11,75 @@ bool FileManager::fileExists(const std::string& path) {
     return fs::exists(path) && fs::is_regular_file(path);
 }
 
-std::string FileManager::validateOutputPath(const std::string& outputPath) {
+std::string FileManager::validateOutputPath(std::string& outputPath) {
     fs::path outPath(outputPath);
     fs::path parentPath = outPath.parent_path();
+    fs::path fileName   = outPath.filename();
 
-    // Если родительский путь пустой, значит файл будет создан в текущей директории
+    // If no parent directory is specified, assume the file will be created in the current directory.
     if (parentPath.empty()) {
-        return outputPath;
-    }
-    
-    // Если каталог не существует, предлагаем использовать текущую директорию
-    if (!fs::exists(parentPath)) {
-        std::cout << "Каталог \"" << parentPath.string() 
-                  << "\" не существует. Сохранить файл в текущей директории? (y/n): ";
-        char response;
-        std::cin >> response;
-        if (response == 'y' || response == 'Y') {
-            fs::path newPath = fs::current_path() / outPath.filename();
-            std::cout << "Выбран новый путь: " << newPath.string() << std::endl;
-            return newPath.string();
-        } else {
-            std::cerr << "Невозможно использовать указанный путь. Завершение программы.\n";
-            exit(EXIT_FAILURE);
+        // If file name is empty, assign a default file name.
+        if (fileName.empty()) {
+            outputPath = "output.log";
+            outPath = outputPath;
+        }
+        // If file name is provided but has no extension, handle this case.
+        else if (fileName.extension().empty()) {
+            handleMissingExtension(outPath);
+        }
+        // Otherwise, a file name with an extension is provided; nothing needs to be done.
+    } else {
+        // If a parent directory is provided but the file name is missing,
+        // append the default file name.
+        if (fileName.empty()) {
+            fileName = "output.log";
+            outPath /= fileName;
         }
     }
-    return outputPath;
+
+    // Update parentPath and fileName after possible modifications.
+    parentPath = outPath.parent_path();
+    fileName = outPath.filename();
+
+    // If the specified parent directory does not exist,
+    // prompt the user to save the file in the current directory.
+    if (!fs::exists(parentPath)) {
+        outPath = promptForNonExistentDirectory(parentPath, fileName);
+    }
+
+    return outPath.string();
+}
+
+void FileManager::handleMissingExtension(fs::path& outPath) {
+    // Prompt the user to clarify whether the provided input is a directory or a file,
+    // since the file name does not have an extension.
+    fs::path fileName = outPath.filename();
+    std::cout << "The provided file name \"" << fileName.string() << "\" does not contain an extension.\n"
+              << "Choise an actio:\n"
+              << "1) it is a directory,\n"
+              << "2) it is a file,\n"
+              << "Your choice(1/2): ";
+    if(userChoice()){
+        outPath = fs::path(fileName.string()) / "output.log";
+    } else {
+        outPath += ".log";
+    }
+}
+
+fs::path FileManager::promptForNonExistentDirectory(const fs::path& parentPath, const fs::path& fileName) {
+    // Ask the user if they want to use the current directory if the specified one doesn't exist.
+    std::cout << "Directory \"" << parentPath.string() 
+              << "\" does not exist. Save file in the current directory? (y/n): ";
+    char response;
+    std::cin >> response;
+    if (response == 'y' || response == 'Y') {
+        fs::path newPath = fs::current_path() / fileName;
+        std::cout << "New path selected: " << newPath.string() << std::endl;
+        return newPath;
+    } else {
+        std::cerr << "Cannot use the specified path. Exiting program.\n";
+        exit(EXIT_FAILURE);
+    }
 }
 
 bool FileManager::fileAlreadyExists(const std::string& path) {
@@ -67,10 +111,6 @@ bool FileManager::promptMergeFilesorSeperate(const size_t inputFilesNumber){
 }
 
 void FileManager::getLogFilesFromDirectory(std::string& directoryPath, std::vector<std::string>& logFiles){
-    if(directoryPath.empty()){
-        return;
-    }
-    
     if(!std::filesystem::exists(directoryPath) || !std::filesystem::is_directory(directoryPath)){
         std::cerr << "Error: Incorect directory path!!!" << std::endl;
         return;
