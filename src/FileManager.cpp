@@ -55,7 +55,7 @@ void FileManager::handleMissingExtension(fs::path& outPath) {
     // since the file name does not have an extension.
     fs::path fileName = outPath.filename();
     std::cout << "The provided file name \"" << fileName.string() << "\" does not contain an extension.\n"
-              << "Choise an actio:\n"
+              << "Select an action:\n"
               << "1) it is a directory,\n"
               << "2) it is a file,\n"
               << "Your choice(1/2): ";
@@ -87,11 +87,11 @@ bool FileManager::fileAlreadyExists(const std::string& path) {
 }
 
 bool FileManager::promptOverwriteOrAppend(const std::string& filePath) {
-    std::cout << "Файл \"" << filePath << "\" уже существует.\n";
-    std::cout << "Выберите действие:\n";
-    std::cout << "  1. Перезаписать файл\n";
-    std::cout << "  2. Добавить данные в конец файла\n";
-    std::cout << "Ваш выбор (1/2): ";
+    std::cout << "The file \"" << filePath << "\" already exists\n";
+    std::cout << "Select an action:\n";
+    std::cout << "  1. Rewrite the file\n";
+    std::cout << "  2. Add data to the end of the file\n";
+    std::cout << "Your choice (1/2): ";
     
     return userChoice();
 }
@@ -119,9 +119,9 @@ void FileManager::getLogFilesFromDirectory(std::string& directoryPath, std::vect
     std::vector<std::string> allowedExtensions = askDesiredExtensions();
     for (const auto &entry : std::filesystem::directory_iterator(directoryPath)) {
         if (entry.is_regular_file()) {
-            // Получаем расширение файла
+            //Get a file extension
             std::string fileExt = entry.path().extension().string();
-            // Проверяем, содержится ли расширение в списке разрешённых
+            //Check if the extension is in the allowed list 
             if (std::find(allowedExtensions.begin(), allowedExtensions.end(), fileExt) != allowedExtensions.end()) {
                 logFiles.push_back(entry.path().string());
             }
@@ -131,7 +131,7 @@ void FileManager::getLogFilesFromDirectory(std::string& directoryPath, std::vect
 
 std::vector<std::string> FileManager::askDesiredExtensions(){
     std::string lineExtensions;
-    std::cout << "\nEnter extensions you want to extract from the folder with logs: ";
+    std::cout << "\nEnter extensions you want to extract from the folder with logs(.extension): ";
     std::getline(std::cin, lineExtensions);
     
     std::istringstream iss(lineExtensions);

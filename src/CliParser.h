@@ -7,36 +7,37 @@
 #include <iostream>
 #include <fstream>
 
-// Структура для хранения параметров командной строки
+// Structure for storing command line arguments
+
 struct CliConfig {
-    std::vector<std::string> inputFile;    // Пути к входным файлам
-    std::string inputDir;                  // Путь к директории с лог-файлами
-    std::string outputFile;                // Выходной файл или базовый путь для результатов
-    std::string regexMatch;                // Регулярное выражение для полного совпадения
-    std::string regexSearch;               // Регулярное выражение для поиска
-    std::string excludeRegex;              // Регулярное выражение для исключения строк
-    std::string configuration;             // Путь к конфигурационному файлу (txt)
-    std::vector<std::string> exclude;      // Список слов, которые должны отсутствовать в строке
-    std::vector<std::string> levels;       // Список уровней логов
+    std::vector<std::string> inputFile;    // Input file paths
+    std::string inputDir;                  // Path to a directory with log-files
+    std::string outputFile;                // Output file path
+    std::string regexMatch;                // Regular expression for exact match
+    std::string regexSearch;               // Regular expression for searching
+    std::string excludeRegex;              // Regular expression for excluding lines
+    std::string configuration;             // Config file path 
+    std::vector<std::string> exclude;      // List of excluded word(-s) that should be absent in the line
+    std::vector<std::string> levels;       // List of log levels 
 };
 
 class CliParser {
 public:
     CliParser();
     
-    // Разбор аргументов командной строки; результат сохраняется в config
+    // Parse command line arguments; save result to config
     bool parse(int argc, char** argv, CliConfig &config);
     
-    // Возвращает сообщение об ошибке (если парсинг завершился неудачно)
+    // Return error message (in case parsing went wrong)
     std::string getError() const;
     
-    // Вывод справки по использованию программы
+    // Output instruction how to use programme
     void printUsage() const;
     
 private:
     std::string errorMessage;
     
-    // Вспомогательная функция для извлечения параметров, следующих за флагом.
+    // helper function to get arguments following the flag
     std::vector<std::string> extractParameters(int &currentIndex, int argc, char** argv);
 
     //function to extract configs from the user's file

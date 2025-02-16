@@ -9,18 +9,18 @@
 
 class FileManager {
 public:
-    // Проверка существования файла по указанному пути
+    //Check if the file exist
     static bool fileExists(const std::string& path);
 
-    // Валидация выходного пути.
-    // Если родительский каталог не существует, предложить сохранить в текущей директории.
+    //Output path validation
+    //If parent directory does not exist, suggest to store in the current directory
     static std::string validateOutputPath(std::string& outputPath);
 
-    // Проверка, существует ли файл с данным именем
+    //Check if a file with the given name exists 
     static bool fileAlreadyExists(const std::string& path);
 
-    // Запрос у пользователя, хочет ли он перезаписать существующий файл или дописать в конец.
-    // Возвращает true, если выбран режим перезаписи, false – для дозаписи.
+    //Ask the user if they want to overwrite an existing file or append to the end
+    //Returns true of overwrite mode is selected, false for appending
     static bool promptOverwriteOrAppend(const std::string& filePath);
 
     //ask the user if he want to merge all logs in one file or seperate them

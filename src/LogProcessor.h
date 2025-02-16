@@ -14,23 +14,23 @@ class LogProcessor {
 public:
     LogProcessor(const std::vector<std::string>& inputPaths, const std::string& outputPath);
 
-    // Основной метод обработки логов с фильтрацией
+    //Main method to process logs with filtering
     void process(const ILogFilter& filter) const;
 
 private:
     std::vector<std::string> inputFiles;
     std::string outputFile;
 
-    // Обработка логов с объединённым выводом
+    //Log processing with merged output
     void processMergedOutput(const ILogFilter& filter) const;
     
-    // Обработка логов с отдельными выходными файлами для каждого входного файла
+    //Log processing with seperate output files for each input file
     void processSeparateOutputs(const ILogFilter& filter) const;
     
-    // Общая логика обработки одного входного файла
+    //General process logic for one output file 
     void processFile(const std::string& inputFilePath, std::ofstream& outFile, const ILogFilter& filter) const;
     
-    // Вспомогательный метод для получения режима открытия файла (trunc или append)
+    //Helper method to get the file open mode(trunc or append)
     std::ios_base::openmode getOutputFileMode(const std::string& filePath) const;
 };
 

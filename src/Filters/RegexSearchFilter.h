@@ -8,10 +8,11 @@
 
 class RegexSearchFilter : public ILogFilter {
 public:
-    // Конструктор принимает регулярное выражение в виде строки
+
+    // The constructor takes a regular expression as a string
     explicit RegexSearchFilter(const std::string &pattern);
 
-    // Метод проверяет, что в строке лога найдено хотя бы одно совпадение с регулярным выражением
+    // The method checks that at least one match with the regular expression was found in the log line
     bool matches(const std::string &logLine) const override;
 
 private:

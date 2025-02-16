@@ -1,5 +1,5 @@
 #include "CliParser.h"
-#include "FileManager.h"  // Для проверки существования файлов
+#include "FileManager.h"
 #include <sstream>
 
 CliParser::CliParser() : errorMessage("") {}
@@ -21,7 +21,7 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
         return false;
     }
     
-    // Перебор аргументов командной строки
+    // Command line parsing
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
         
@@ -30,7 +30,7 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
             return false;
         } 
         else if (arg == "--input") {
-            // Извлекаем один или несколько параметров после флага --input
+            // Extract one or more parameters after the --input flag
             config.inputFile = extractParameters(i, argc, argv);
             if (config.inputFile.empty()) {
                 errorMessage = "Syntax error: The flag --input requires at least one file path.";
@@ -110,7 +110,7 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
 
 std::vector<std::string> CliParser::extractParameters(int &currentIndex, int argc, char** argv) {
     std::vector<std::string> parameters;
-    // Извлекаем все параметры, пока следующий аргумент не начинается с "--" или не достигнут конец аргументов
+    // Extract all parameters while next argument does not start with -- or the end of the arguments has not been reached
     while (currentIndex + 1 < argc) {
         std::string nextArg = argv[currentIndex + 1];
         if (nextArg.rfind("--", 0) == 0) {
@@ -136,12 +136,11 @@ void CliParser::loadConfig(CliConfig& config){
         if(line.empty() || line[0] == '#'){
             continue;
         }
-    
+        
         std::istringstream iss(line);
         std::string key, value;
         
         if(std::getline(iss, key, '=') && std::getline(iss, value)){
-            std::cout << key << "   " << value;
             if(key == "--input"){
                 config.inputFile.push_back(value);
             } else if(key == "--input_dir"     && config.inputDir.empty()){
@@ -183,7 +182,8 @@ bool CliParser::inputDataValidation(CliConfig& config){
     if(!config.inputDir.empty()){
         FileManager::getLogFilesFromDirectory(config.inputDir, config.inputFile);
     }
-    // Валидация входных файлов: удаляем несуществующие файлы
+
+    // Input files validation: delete non-existent files
     for (size_t i = 0; i < config.inputFile.size(); ) {
         if (!FileManager::fileExists(config.inputFile[i])) {
             errorMessage += "Input file does not exist: " + config.inputFile[i] + "\n";
@@ -204,7 +204,7 @@ bool CliParser::inputDataValidation(CliConfig& config){
 }
 
 /*
-// Функция для удаления пробелов с начала и конца строки.
+//*Function remove spaces from the begining and end of a string 
 static inline std::string trim(const std::string &s) {
     auto start = s.begin();
     while (start != s.end() && std::isspace(*start)) {

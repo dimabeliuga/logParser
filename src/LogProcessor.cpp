@@ -8,11 +8,11 @@ LogProcessor::LogProcessor(const std::vector<std::string>& inputPaths, const std
 }
 
 void LogProcessor::process(const ILogFilter& filter) const {
-    // Если пользователь выбирает объединённый вывод, обрабатываем все файлы в один выходной файл
+    //If the user choices merge output, we process all input files into one output file
     if (FileManager::promptMergeFilesorSeperate(inputFiles.size())) {
         processMergedOutput(filter);
     }
-    // Иначе обрабатываем каждый входной файл отдельно
+    //Otherwise, every input file will be processed seperately
     else {
         processSeparateOutputs(filter);
     }
@@ -30,7 +30,7 @@ void LogProcessor::processMergedOutput(const ILogFilter& filter) const {
         processFile(inputPath, outFile, filter);
     }
     std::cout << "Logs were written in " << outputFile << "\n";
-    // outFile автоматически закроется при выходе из области видимости
+    //outFile will be closed automaticly after exiting the scope
 }
 
 void LogProcessor::processSeparateOutputs(const ILogFilter& filter) const {
@@ -44,7 +44,7 @@ void LogProcessor::processSeparateOutputs(const ILogFilter& filter) const {
         std::ofstream outFile(outFilePath, mode);
         if (!outFile.is_open()) {
             std::cerr << "Failed to open the output file: " << outFilePath << std::endl;
-            continue; // Переходим к следующему файлу
+            continue; //move on to the next file
         }
 
         processFile(inputFile, outFile, filter);
@@ -74,5 +74,5 @@ void LogProcessor::processFile(const std::string& inputFilePath, std::ofstream& 
             outFile << line << std::endl;
         }
     }
-    // inFile автоматически закроется при выходе из области видимости
+    // inFile will be closed automaticly after exiting the scope
 }

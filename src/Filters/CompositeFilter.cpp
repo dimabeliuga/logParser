@@ -6,11 +6,12 @@ void CompositeFilter::addFilter(std::unique_ptr<ILogFilter> filter) {
 }
 
 bool CompositeFilter::matches(const std::string &logLine) const {
-    // Если фильтров не задано, считаем, что строка удовлетворяет условиям
+    // If no filters are, we assume that the srting satisfies the conditions
     if (filters.empty()) {
         return true;
     }
-    // Применяем все фильтры: если хотя бы один фильтр возвращает false, строка не проходит проверку
+
+    // Apply all filters: if at least one filter returns false, the row will not be written to the output file
     for (const auto &filter : filters) {
         if (!filter->matches(logLine)) {
             return false;
@@ -20,27 +21,27 @@ bool CompositeFilter::matches(const std::string &logLine) const {
 }
 
 void CompositeFilter::buildCompositeFilters(const CliConfig& config){
-    // Если указан флаг --regex_match, добавляем фильтр полного соответствия
+    // If the --regex_match flag specified, add an exact match filter
     if (!config.regexMatch.empty()) {
         addFilter(std::make_unique<RegexMatchFilter>(config.regexMatch));
     }
     
-    // Если указан флаг --regex_search, добавляем фильтр поиска совпадений
+    // --regex_search
     if (!config.regexSearch.empty()) {
         addFilter(std::make_unique<RegexSearchFilter>(config.regexSearch));
     }
     
-    //if the user specified --exclude_regex, add a regex that the lines should not match 
+    // --exclude_regex
     if(!config.excludeRegex.empty()){
         addFilter(std::make_unique<ExcludeRegexFilter>(config.excludeRegex));
     }
     
-    //if the user specified --exclude, add a word(words) that the lines should not contain
+    // --exclude
     if(!config.exclude.empty()){
         addFilter(std::make_unique<ExcludeFilter>(config.exclude));
     }
     
-    // Если указан флаг --level, добавляем фильтр уровней логов
+    // --level
     if (!config.levels.empty()) {
         addFilter(std::make_unique<LevelFilter>(config.levels));
     }    

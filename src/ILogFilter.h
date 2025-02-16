@@ -7,7 +7,8 @@
 class ILogFilter {
 public:
     virtual ~ILogFilter() = default;
-    // Метод проверки строки лога. Возвращает true, если строка удовлетворяет условию фильтра.
+    
+    //A method for checking each string of a log file. It returns true, if a log string satisfies the filter condition
     virtual bool matches(const std::string& logLine) const = 0;
 };
 

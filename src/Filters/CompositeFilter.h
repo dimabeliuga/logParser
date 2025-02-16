@@ -22,8 +22,7 @@ class CompositeFilter : public ILogFilter {
 public:
     CompositeFilter() = default;
 
-    
-    // Метод проверяет, что строка удовлетворяет всем добавленным фильтрам
+    // The method checks that the line satisfies all added filters
     bool matches(const std::string &logLine) const override;
     
     //function for initialization the valuable filters with all user conditions
@@ -32,7 +31,7 @@ public:
 private:
     std::vector<std::unique_ptr<ILogFilter>> filters;
 
-    // Добавление нового фильтра в составной фильтр
+    // Adding a new filtr to the composite filter
     void addFilter(std::unique_ptr<ILogFilter> filter);
 };
 

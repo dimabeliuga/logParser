@@ -4,7 +4,7 @@
 #include "LogProcessor.h"
 
 int main(int argc, char** argv) {
-    // Разбор аргументов командной строки
+    //Parsing command line arguments
     CliConfig config;
     CliParser parser;
     if (!parser.parse(argc, argv, config)) {
@@ -13,11 +13,11 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    // Создание составного фильтра, который объединяет активные проверки
+    //Creating a filter that combines all active checks 
     CompositeFilter compositeFilter;
     compositeFilter.buildCompositeFilters(config);
     
-    // Инициализация LogProcessor и запуск обработки логов
+    //Initialize LogProcessor and start log processing
     LogProcessor logProcessor(config.inputFile, config.outputFile);
     logProcessor.process(compositeFilter);
     

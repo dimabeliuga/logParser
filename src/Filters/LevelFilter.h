@@ -8,10 +8,10 @@
 
 class LevelFilter : public ILogFilter {
 public:
-    // Конструктор принимает вектор уровней логов
+    // The constructor takes a vector with log levels
     explicit LevelFilter(const std::vector<std::string>& levels);
 
-    // Метод проверяет, что строка лога содержит хотя бы один из указанных уровней
+    // The method checks that at least the log line contains one of the specified levels
     bool matches(const std::string &logLine) const override;
 
 private:

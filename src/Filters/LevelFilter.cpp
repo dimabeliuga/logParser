@@ -7,7 +7,7 @@ LevelFilter::LevelFilter(const std::vector<std::string>& levels)
 }
 
 bool LevelFilter::matches(const std::string &logLine) const {
-    // Проходим по всем указанным уровням и ищем их наличие в строке
+    // We go through all the specified levels and look for their presence in the line
     for (const auto &level : levels) {
         if (logLine.find(level) != std::string::npos) {
             return true;
