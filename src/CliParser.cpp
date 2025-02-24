@@ -2,6 +2,7 @@
 #include "FileManager.h"
 #include <sstream>
 
+/// Default constructor initializing the error message.
 CliParser::CliParser() : errorMessage("") {}
 
 std::string CliParser::getError() const {
@@ -14,6 +15,7 @@ void CliParser::printUsage() const {
               << "[--level <log_level1> [<log_level2> ...]] [--exclude <word1> [<word2> ...]] "
               << "[--exclude_regex <regex>] [--config <config_file>]\n";
 }
+
 
 bool CliParser::parse(int argc, char** argv, CliConfig &config) {
     if (argc < 2) {
@@ -110,7 +112,7 @@ bool CliParser::parse(int argc, char** argv, CliConfig &config) {
 
 std::vector<std::string> CliParser::extractParameters(int &currentIndex, int argc, char** argv) {
     std::vector<std::string> parameters;
-    // Extract all parameters while next argument does not start with -- or the end of the arguments has not been reached
+    // Extract all parameters while the next argument does not start with "--" or the end of the arguments is reached
     while (currentIndex + 1 < argc) {
         std::string nextArg = argv[currentIndex + 1];
         if (nextArg.rfind("--", 0) == 0) {
@@ -123,47 +125,47 @@ std::vector<std::string> CliParser::extractParameters(int &currentIndex, int arg
 }
 
 
-void CliParser::loadConfig(CliConfig& config){
+void CliParser::loadConfig(CliConfig& config) {
     std::ifstream inFile(config.configuration);
-    if(!inFile.is_open()){
+    if (!inFile.is_open()) {
         std::cerr << "Error: impossible to open the configuration file";
-        return ;
+        return;
     }
 
     std::string line;
-    while(std::getline(inFile, line)){
-        //if line is comment or empty, we skip this line
-        if(line.empty() || line[0] == '#'){
+    while (std::getline(inFile, line)) {
+        // Skip empty lines and comments
+        if (line.empty() || line[0] == '#') {
             continue;
         }
         
         std::istringstream iss(line);
         std::string key, value;
         
-        if(std::getline(iss, key, '=') && std::getline(iss, value)){
-            if(key == "--input"){
+        if (std::getline(iss, key, '=') && std::getline(iss, value)) {
+            if (key == "--input") {
                 config.inputFile.push_back(value);
-            } else if(key == "--input_dir"     && config.inputDir.empty()){
+            } else if (key == "--input_dir" && config.inputDir.empty()) {
                 std::cout << value << '\n';
                 config.inputDir = value;
-            } else if(key == "--output" && config.outputFile.empty()){
+            } else if (key == "--output" && config.outputFile.empty()) {
                 config.outputFile = value;
-            } else if(key == "--regex_match"   && config.regexMatch.empty()){
+            } else if (key == "--regex_match" && config.regexMatch.empty()) {
                 config.regexMatch = value;
-            } else if(key == "--regex_search"  && config.regexSearch.empty()){
+            } else if (key == "--regex_search" && config.regexSearch.empty()) {
                 config.regexSearch = value;
-            } else if(key == "--exclude_regex" && config.excludeRegex.empty()){
+            } else if (key == "--exclude_regex" && config.excludeRegex.empty()) {
                 config.excludeRegex = value;
-            } else if(key == "--exclude"){
+            } else if (key == "--exclude") {
                 std::istringstream excludeWords(value);
                 std::string word;
-                while(excludeWords >> word){
+                while (excludeWords >> word) {
                     config.exclude.push_back(word);
                 }
-            } else if(key == "--level"){
+            } else if (key == "--level") {
                 std::istringstream listLevels(value);
                 std::string level;
-                while (listLevels >> level){
+                while (listLevels >> level) {
                     config.levels.push_back(level);
                 }
             }
@@ -174,16 +176,16 @@ void CliParser::loadConfig(CliConfig& config){
 }
 
 
-bool CliParser::inputDataValidation(CliConfig& config){
-    if(!config.configuration.empty()){
+bool CliParser::inputDataValidation(CliConfig& config) {
+    if (!config.configuration.empty()) {
         loadConfig(config);
     }
 
-    if(!config.inputDir.empty()){
+    if (!config.inputDir.empty()) {
         FileManager::getLogFilesFromDirectory(config.inputDir, config.inputFile);
     }
 
-    // Input files validation: delete non-existent files
+    // Validate input files: remove non-existent files
     for (size_t i = 0; i < config.inputFile.size(); ) {
         if (!FileManager::fileExists(config.inputFile[i])) {
             errorMessage += "Input file does not exist: " + config.inputFile[i] + "\n";
@@ -204,16 +206,18 @@ bool CliParser::inputDataValidation(CliConfig& config){
 }
 
 /*
-//*Function remove spaces from the begining and end of a string 
-static inline std::string trim(const std::string &s) {
-    auto start = s.begin();
-    while (start != s.end() && std::isspace(*start)) {
-        start++;
-    }
-    auto end = s.end();
-    do {
-        end--;
-    } while (std::distance(start, end) > 0 && std::isspace(*end));
-    return std::string(start, end + 1);
-}
-*/
+ * The following is an example trim function to remove spaces from the beginning and end of a string.
+ * Uncomment and use if necessary.
+ *
+ * static inline std::string trim(const std::string &s) {
+ *     auto start = s.begin();
+ *     while (start != s.end() && std::isspace(*start)) {
+ *         start++;
+ *     }
+ *     auto end = s.end();
+ *     do {
+ *         end--;
+ *     } while (std::distance(start, end) > 0 && std::isspace(*end));
+ *     return std::string(start, end + 1);
+ * }
+ */
