@@ -1,18 +1,14 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
 project(LogParser LANGUAGES CXX)
 
-# Устанавливаем стандарт C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Добавляем директорию с исходными файлами
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/include/Filters)
 
-# Перечисляем исходные файлы проекта
-set(SOURCES
-    src/main.cpp
+set(LIB_SOURCES
     src/CliParser.cpp
     src/FileManager.cpp
     src/LogProcessor.cpp
@@ -24,5 +20,17 @@ set(SOURCES
     src/Filters/ExcludeRegexFilter.cpp
 )
 
-# Создаем исполняемый файл
-add_executable(LogParser ${SOURCES})
+# create library for this project and tests
+add_library(LogParserLib ${LIB_SOURCES})
+target_include_directories(LogParserLib PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
+add_executable(LogParser src/main.cpp)
+target_link_libraries(LogParser PRIVATE LogParserLib)
+
+# if build test option is on, tests will be built
+option(BUILD_TESTS "Build tests" ON)
+
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
