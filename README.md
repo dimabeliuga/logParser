@@ -62,12 +62,12 @@ To build and run tests (ensure GoogleTest is installed):
    ctest --verbose
 Alternatively, you can run each test executable individually from the build directory.
 
+Contributing
+Contributions are welcome! Please fork the repository, make your changes, and open a pull request. Ensure your code adheres to the project standards and includes appropriate tests.
+
 ## Documentation ##
 Documentation is generated using Doxygen.
 
 Generate a Doxyfile:
-   ```bash
+  ```bash
    doxygen -g
-
-Contributing
-Contributions are welcome! Please fork the repository, make your changes, and open a pull request. Ensure your code adheres to the project standards and includes appropriate tests.
