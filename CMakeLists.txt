@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(LogParser VERSION 1.0 LANGUAGES CXX)
+project(LogParser LANGUAGES CXX)
 
 # Устанавливаем стандарт C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Добавляем директорию с исходными файлами
-include_directories(${PROJECT_SOURCE_DIR}/src)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include/Filters)
 
 # Перечисляем исходные файлы проекта
 set(SOURCES
