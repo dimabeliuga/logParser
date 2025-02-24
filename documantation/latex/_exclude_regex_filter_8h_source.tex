@@ -1,0 +1,25 @@
+\doxysection{Exclude\+Regex\+Filter.\+h}
+\label{_exclude_regex_filter_8h_source}\index{include/Filters/ExcludeRegexFilter.h@{include/Filters/ExcludeRegexFilter.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ EXCLUDE\_REGEX\_FILTER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ EXCLUDE\_REGEX\_FILTER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}ILogFilter.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <regex>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }ExcludeRegexFilter\ :\ \textcolor{keyword}{public}\ ILogFilter\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{explicit}\ ExcludeRegexFilter(\textcolor{keyword}{const}\ std::string\&\ patterns);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ matches(\textcolor{keyword}{const}\ std::string\&\ logLine)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ \ \ std::regex\ excludePattern;\ }
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ EXCLUDE\_REGEX\_FILTER\_H}}
+
+\end{DoxyCode}

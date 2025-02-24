@@ -1,0 +1,58 @@
+\doxysection{ILog\+Filter Class Reference}
+\label{class_i_log_filter}\index{ILogFilter@{ILogFilter}}
+
+
+Interface for log filtering functionality.  
+
+
+
+
+{\ttfamily \#include $<$ILog\+Filter.\+h$>$}
+
+Inheritance diagram for ILog\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.447028cm]{class_i_log_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_i_log_filter_a67e9226a1d381cc9713013e1e3ccab1c} 
+virtual {\bfseries $\sim$\+ILog\+Filter} ()=default
+\begin{DoxyCompactList}\small\item\em Virtual destructor for interface class. \end{DoxyCompactList}\item 
+virtual bool \textbf{ matches} (const std\+::string \&log\+Line) const =0
+\begin{DoxyCompactList}\small\item\em Check if a log string satisfies the filter condition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interface for log filtering functionality. 
+
+\doxysubsection{Member Function Documentation}
+\index{ILogFilter@{ILogFilter}!matches@{matches}}
+\index{matches@{matches}!ILogFilter@{ILogFilter}}
+\doxysubsubsection{matches()}
+{\footnotesize\ttfamily \label{class_i_log_filter_ac6816144c34850729bbce0b1c1abb906} 
+virtual bool ILog\+Filter\+::matches (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{log\+Line}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Check if a log string satisfies the filter condition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em log\+Line} & String to be checked against the filter \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the log string matches the filter criteria, false otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \textbf{ Composite\+Filter} \doxyref{}{p.}{class_composite_filter_a7fadbe6f0844285cc6edab23437708a3}, \textbf{ Exclude\+Filter} \doxyref{}{p.}{class_exclude_filter_a1234ce24245c00125daee43cebf960b9}, \textbf{ Exclude\+Regex\+Filter} \doxyref{}{p.}{class_exclude_regex_filter_afe2dcd1d0490d9998478637447a606b9}, \textbf{ Level\+Filter} \doxyref{}{p.}{class_level_filter_ae9f9ebf9058b9776a2a21b602e0b77f8}, \textbf{ Regex\+Match\+Filter} \doxyref{}{p.}{class_regex_match_filter_a078302300b60e810a3078e0dc0e290a4}, and \textbf{ Regex\+Search\+Filter} \doxyref{}{p.}{class_regex_search_filter_a6f0cb27439aa4fa6624f7d7e1a961137}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/ILog\+Filter.\+h\end{DoxyCompactItemize}

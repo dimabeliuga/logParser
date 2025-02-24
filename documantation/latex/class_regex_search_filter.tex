@@ -1,0 +1,81 @@
+\doxysection{Regex\+Search\+Filter Class Reference}
+\label{class_regex_search_filter}\index{RegexSearchFilter@{RegexSearchFilter}}
+
+
+A class that filters log entries using regular expressions.  
+
+
+
+
+{\ttfamily \#include $<$Regex\+Search\+Filter.\+h$>$}
+
+Inheritance diagram for Regex\+Search\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_regex_search_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Regex\+Search\+Filter} (const std\+::string \&pattern)
+\begin{DoxyCompactList}\small\item\em Constructor that takes a regular expression as a string. \end{DoxyCompactList}\item 
+bool \textbf{ matches} (const std\+::string \&log\+Line) const override
+\begin{DoxyCompactList}\small\item\em Checks that at least one match with the regular expression is found in the log line. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \textbf{ ILog\+Filter}}
+\begin{DoxyCompactItemize}
+\item 
+virtual {\bfseries $\sim$\+ILog\+Filter} ()=default
+\begin{DoxyCompactList}\small\item\em Virtual destructor for interface class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class that filters log entries using regular expressions. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\index{RegexSearchFilter@{RegexSearchFilter}!RegexSearchFilter@{RegexSearchFilter}}
+\index{RegexSearchFilter@{RegexSearchFilter}!RegexSearchFilter@{RegexSearchFilter}}
+\doxysubsubsection{RegexSearchFilter()}
+{\footnotesize\ttfamily \label{class_regex_search_filter_a5fe00892879606fcab7d0296f2795f04} 
+Regex\+Search\+Filter\+::\+Regex\+Search\+Filter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{pattern}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor that takes a regular expression as a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pattern} & The string containing the regular expression. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\index{RegexSearchFilter@{RegexSearchFilter}!matches@{matches}}
+\index{matches@{matches}!RegexSearchFilter@{RegexSearchFilter}}
+\doxysubsubsection{matches()}
+{\footnotesize\ttfamily \label{class_regex_search_filter_a6f0cb27439aa4fa6624f7d7e1a961137} 
+bool Regex\+Search\+Filter\+::matches (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{log\+Line}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Checks that at least one match with the regular expression is found in the log line. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em log\+Line} & The log string to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if a match with the regular expression is found, false otherwise. 
+\end{DoxyReturn}
+
+
+Implements \textbf{ ILog\+Filter} \doxyref{}{p.}{class_i_log_filter_ac6816144c34850729bbce0b1c1abb906}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\+Filters/Regex\+Search\+Filter.\+h\item 
+src/\+Filters/Regex\+Search\+Filter.\+cpp\end{DoxyCompactItemize}

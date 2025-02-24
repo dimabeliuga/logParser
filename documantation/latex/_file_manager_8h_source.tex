@@ -1,0 +1,39 @@
+\doxysection{File\+Manager.\+h}
+\label{_file_manager_8h_source}\index{include/FileManager.h@{include/FileManager.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ FILE\_MANAGER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ FILE\_MANAGER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }FileManager\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ fileExists(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ validateOutputPath(std::string\&\ outputPath);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ fileAlreadyExists(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ promptOverwriteOrAppend(\textcolor{keyword}{const}\ std::string\&\ filePath);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ promptMergeFilesorSeperate(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ inputFilesNumber);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ getLogFilesFromDirectory(std::string\&\ directoryPath,\ std::vector<std::string>\&\ logFiles);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ userChoice();}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ handleMissingExtension(std::filesystem::path\&\ outPath);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<std::string>\ askDesiredExtensions();}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ std::filesystem::path\ promptForNonExistentDirectory(\textcolor{keyword}{const}\ std::filesystem::path\&\ parentPath,\ \textcolor{keyword}{const}\ std::filesystem::path\&\ fileName);}
+\DoxyCodeLine{00083\ \};}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ FILE\_MANAGER\_H}}
+
+\end{DoxyCode}

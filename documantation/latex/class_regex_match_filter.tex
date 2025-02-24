@@ -1,0 +1,83 @@
+\doxysection{Regex\+Match\+Filter Class Reference}
+\label{class_regex_match_filter}\index{RegexMatchFilter@{RegexMatchFilter}}
+
+
+Filters log lines by checking if the entire string matches a regular expression.  
+
+
+
+
+{\ttfamily \#include $<$Regex\+Match\+Filter.\+h$>$}
+
+Inheritance diagram for Regex\+Match\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_regex_match_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Regex\+Match\+Filter} (const std\+::string \&pattern)
+\begin{DoxyCompactList}\small\item\em Constructs a \doxyref{Regex\+Match\+Filter}{p.}{class_regex_match_filter} with the specified pattern. \end{DoxyCompactList}\item 
+bool \textbf{ matches} (const std\+::string \&log\+Line) const override
+\begin{DoxyCompactList}\small\item\em Checks whether the entire log line matches the regular expression. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \textbf{ ILog\+Filter}}
+\begin{DoxyCompactItemize}
+\item 
+virtual {\bfseries $\sim$\+ILog\+Filter} ()=default
+\begin{DoxyCompactList}\small\item\em Virtual destructor for interface class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Filters log lines by checking if the entire string matches a regular expression. 
+
+The \doxyref{Regex\+Match\+Filter}{p.}{class_regex_match_filter} uses a regular expression to determine whether the whole log line completely matches the given pattern. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\index{RegexMatchFilter@{RegexMatchFilter}!RegexMatchFilter@{RegexMatchFilter}}
+\index{RegexMatchFilter@{RegexMatchFilter}!RegexMatchFilter@{RegexMatchFilter}}
+\doxysubsubsection{RegexMatchFilter()}
+{\footnotesize\ttfamily \label{class_regex_match_filter_a56c092998d2bed66bcbbd9d4e077512f} 
+Regex\+Match\+Filter\+::\+Regex\+Match\+Filter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{pattern}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs a \doxyref{Regex\+Match\+Filter}{p.}{class_regex_match_filter} with the specified pattern. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pattern} & The regular expression pattern as a string. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\index{RegexMatchFilter@{RegexMatchFilter}!matches@{matches}}
+\index{matches@{matches}!RegexMatchFilter@{RegexMatchFilter}}
+\doxysubsubsection{matches()}
+{\footnotesize\ttfamily \label{class_regex_match_filter_a078302300b60e810a3078e0dc0e290a4} 
+bool Regex\+Match\+Filter\+::matches (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{log\+Line}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Checks whether the entire log line matches the regular expression. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em log\+Line} & The log line to be tested. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the whole log line matches the pattern, false otherwise. 
+\end{DoxyReturn}
+
+
+Implements \textbf{ ILog\+Filter} \doxyref{}{p.}{class_i_log_filter_ac6816144c34850729bbce0b1c1abb906}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\+Filters/Regex\+Match\+Filter.\+h\item 
+src/\+Filters/Regex\+Match\+Filter.\+cpp\end{DoxyCompactItemize}

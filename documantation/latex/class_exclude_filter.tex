@@ -1,0 +1,83 @@
+\doxysection{Exclude\+Filter Class Reference}
+\label{class_exclude_filter}\index{ExcludeFilter@{ExcludeFilter}}
+
+
+\doxyref{Exclude\+Filter}{p.}{class_exclude_filter} filters out log lines containing any of the specified words.  
+
+
+
+
+{\ttfamily \#include $<$Exclude\+Filter.\+h$>$}
+
+Inheritance diagram for Exclude\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_exclude_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Exclude\+Filter} (const std\+::vector$<$ std\+::string $>$ \&text)
+\begin{DoxyCompactList}\small\item\em Constructs an \doxyref{Exclude\+Filter}{p.}{class_exclude_filter} with a list of words to exclude. \end{DoxyCompactList}\item 
+bool \textbf{ matches} (const std\+::string \&log\+Line) const override
+\begin{DoxyCompactList}\small\item\em Checks that the log line does not contain any excluded word. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \textbf{ ILog\+Filter}}
+\begin{DoxyCompactItemize}
+\item 
+virtual {\bfseries $\sim$\+ILog\+Filter} ()=default
+\begin{DoxyCompactList}\small\item\em Virtual destructor for interface class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxyref{Exclude\+Filter}{p.}{class_exclude_filter} filters out log lines containing any of the specified words. 
+
+This filter returns true if the log line does NOT contain any of the excluded words. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\index{ExcludeFilter@{ExcludeFilter}!ExcludeFilter@{ExcludeFilter}}
+\index{ExcludeFilter@{ExcludeFilter}!ExcludeFilter@{ExcludeFilter}}
+\doxysubsubsection{ExcludeFilter()}
+{\footnotesize\ttfamily \label{class_exclude_filter_a33fe043e5d12a7848da5bc69346503a0} 
+Exclude\+Filter\+::\+Exclude\+Filter (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::string $>$ \&}]{text}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs an \doxyref{Exclude\+Filter}{p.}{class_exclude_filter} with a list of words to exclude. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & A vector of words that must not appear in the log line. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\index{ExcludeFilter@{ExcludeFilter}!matches@{matches}}
+\index{matches@{matches}!ExcludeFilter@{ExcludeFilter}}
+\doxysubsubsection{matches()}
+{\footnotesize\ttfamily \label{class_exclude_filter_a1234ce24245c00125daee43cebf960b9} 
+bool Exclude\+Filter\+::matches (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{log\+Line}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Checks that the log line does not contain any excluded word. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em log\+Line} & The log line to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if none of the excluded words are found, false otherwise. 
+\end{DoxyReturn}
+
+
+Implements \textbf{ ILog\+Filter} \doxyref{}{p.}{class_i_log_filter_ac6816144c34850729bbce0b1c1abb906}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\+Filters/Exclude\+Filter.\+h\item 
+src/\+Filters/Exclude\+Filter.\+cpp\end{DoxyCompactItemize}
