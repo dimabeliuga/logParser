@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "Filters/RegexMatchFilter.h"
+#include "RegexMatchFilter.h"
 
 class RegexMatchFilterTest : public ::testing::Test{
 protected:

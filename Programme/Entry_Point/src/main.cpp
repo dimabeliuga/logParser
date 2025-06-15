@@ -1,6 +1,6 @@
 // main.cpp
 #include <iostream>
-#include "Filters/CompositeFilter.h"
+#include "CompositeFilter.h"
 #include "LogProcessor.h"
 
 int main(int argc, char** argv) {

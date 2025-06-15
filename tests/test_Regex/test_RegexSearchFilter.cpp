@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "Filters/RegexSearchFilter.h"
+#include "RegexSearchFilter.h"
 
 class RegexSearchFilterTest : public ::testing::Test {
 protected:

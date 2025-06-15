@@ -1,10 +1,5 @@
 #include <gtest/gtest.h>
 #include "CompositeFilter.h"
-#include "RegexMatchFilter.h"
-#include "RegexSearchFilter.h"
-#include "LevelFilter.h"
-#include "ExcludeFilter.h"
-#include "ExcludeRegexFilter.h"
 
 class CompositeFilterTest : public ::testing::Test {
 protected:

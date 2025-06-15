@@ -5,14 +5,17 @@ project(LogParser LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(MAIN_COMPONENTS_NAME "MAIN_COMPONENTS")
+set(FILTERS_LIBRARY_NAME "FILTERS_LIBRARY")
+
 SET (CMAKE_LIBRARY_OUTPUT_DIRECTORY
-        ${PROJECT_BINARY_DIR}/bin
+        ${PROJECT_BINARY_DIR}/MAIN
         CACHE PATH
         "Director for dynamical libraries .so/.dll"
     )
 
 SET (CMAKE_RUNTIME_OUTPUT_DIRECTORY
-        ${PROJECT_BINARY_DIR}/bin
+        ${PROJECT_BINARY_DIR}/MAIN
         CACHE PATH
         "Director for .exe/.out"
     )
@@ -23,27 +26,7 @@ SET (CMAKE_ARCHIVE_OUTPUT_DIRECTORY
         "Directory for static libraries .a/.lib"
     )
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${PROJECT_SOURCE_DIR}/include/Filters)
-
-set(LIB_SOURCES
-    src/CliParser.cpp
-    src/FileManager.cpp
-    src/LogProcessor.cpp
-    src/Filters/RegexMatchFilter.cpp
-    src/Filters/RegexSearchFilter.cpp
-    src/Filters/LevelFilter.cpp
-    src/Filters/CompositeFilter.cpp
-    src/Filters/ExcludeFilter.cpp
-    src/Filters/ExcludeRegexFilter.cpp
-)
-
-# create library for this project and tests
-add_library(LogParserLib ${LIB_SOURCES})
-target_include_directories(LogParserLib PUBLIC ${PROJECT_SOURCE_DIR}/include)
-
-add_executable(LogParser src/main.cpp)
-target_link_libraries(LogParser PRIVATE LogParserLib)
+add_subdirectory(Programme)
 
 # if build test option is on, tests will be built
 option(BUILD_TESTS "Build tests" ON)

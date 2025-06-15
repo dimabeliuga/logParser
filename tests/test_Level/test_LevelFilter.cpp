@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "Filters/LevelFilter.h"
+#include "LevelFilter.h"
 
 class LevelFilterTest : public ::testing::Test {
 protected:

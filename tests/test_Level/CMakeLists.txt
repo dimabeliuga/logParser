@@ -1,1 +1,1 @@
-add_test_executable(LEVEL_FILTER_TESTS ${CMAKE_CURRENT_SOURCE_DIR} "LogParserLib")
+add_test_executable(LEVEL_FILTER_TESTS ${CMAKE_CURRENT_SOURCE_DIR} "")

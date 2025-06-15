@@ -5,7 +5,9 @@ function(add_test_executable test_name test_dir extra_libs)
 
     target_link_libraries(${test_name} 
                         PRIVATE 
-                        gtest_main 
+                        gtest_main
+                        ${MAIN_COMPONENTS_NAME}
+                        ${FILTERS_LIBRARY_NAME} 
                         ${extra_libs}
                         )
     include(GoogleTest)

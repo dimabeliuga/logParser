@@ -9,12 +9,7 @@
 #include <string>
 
 // Filters
-#include "Filters/CompositeFilter.h"
-#include "Filters/RegexMatchFilter.h"
-#include "Filters/RegexSearchFilter.h"
-#include "Filters/LevelFilter.h"
-#include "Filters/ExcludeFilter.h"
-#include "Filters/ExcludeRegexFilter.h"
+#include "Filters.h"
 
 /**
  * @brief CompositeFilter aggregates multiple log filters.
