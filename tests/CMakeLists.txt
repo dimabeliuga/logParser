@@ -1,26 +1,33 @@
-cmake_minimum_required(VERSION 3.20)
-project(LogParserTests LANGUAGES CXX)
+function(add_test_executable test_name test_dir extra_libs)
+    file(GLOB TEST_SRC CONFIGURE_DEPENDS ${test_dir}/*.cpp)
 
-find_package(GTest CONFIG REQUIRED)
-if (NOT GTest_FOUND)
-    message(FATAL_ERROR "GoogleTest not found. Please install GoogleTest to run tests")
-endif()
+    add_executable(${test_name} ${TEST_SRC})
 
-# find all test files in the current directory
-file(GLOB TEST_SOURCES *.cpp)
+    target_link_libraries(${test_name} 
+                        PRIVATE 
+                        gtest_main 
+                        ${extra_libs}
+                        )
+    include(GoogleTest)
+    gtest_discover_tests(${test_name})
+endfunction()
 
-foreach(test_file ${TEST_SOURCES})
-    # extract file name (without exstansion)
-    get_filename_component(test_name ${test_file} NAME_WE)
-    
-    # create executable for each test file 
-    add_executable(${test_name} ${test_file})
-    
-    target_include_directories(${test_name} PRIVATE ${CMAKE_SOURCE_DIR}/include)
-    
-    # link test with libraries
-    target_link_libraries(${test_name} PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main LogParserLib)
+include(FetchContent)
 
-    # add test to the ctest
-    add_test(NAME ${test_name} COMMAND ${test_name})
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG release-1.12.1
+)
+FetchContent_MakeAvailable(googletest)
+
+
+file(GLOB TEST_DIRS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+                    ${CMAKE_CURRENT_SOURCE_DIR}/*
+                    )
+foreach(test_dir ${TEST_DIRS})
+    if(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${test_dir}")
+        add_subdirectory(${test_dir})
+        message("[Test] subdirectory [${test_dir}] has been added")
+    endif()
 endforeach()
